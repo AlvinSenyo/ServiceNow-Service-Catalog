@@ -21,9 +21,11 @@ The solution follows a **Client-Side Event Listener** architecture.
 
 ---
 ## 📂 File Inventory
-* [Puzzle_Fulfillment_Update_Set.xml](./Puzzle_Fulfillment_Update_Set.xml) - Complete technical package for import into ServiceNow.
 * [Technical_Manual.txt](./Technical_Manual.txt) - Detailed, click-by-click build guide for manual replication.
-* [Workflow Steps.PNG](./Workflow%20Steps.PNG) - Full visual map of the Flow Designer logic and branching.
+* [DeveloperMacs.PNG](./DeveloperMac.PNG) - Full visual map of the Flow Designer logic and branching.
+* [Output.PNG](./Output.PNG) - Full visual map of the Flow Designer logic and branching.
+* [RecommendAdobe.PNG](./RecommendAdobe.PNG) - Full visual map of the Flow Designer logic and branching.
+
 ## 📂 File Inventory
 To replicate this logic, the following components must be created within your ServiceNow Update Set:
 
