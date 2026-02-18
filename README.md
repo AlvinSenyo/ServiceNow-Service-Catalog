@@ -1,5 +1,4 @@
-# ServiceNow-Service-Catalog
-# Technical Manual: Contextual Recommendation Logic
+# ServiceNow-Service-Catalog-With-Client-Script
 **Product:** ServiceNow Service Catalog  
 **Requirement:** Display a recommendation for Adobe Photoshop when a user orders a Developer Laptop (Mac) and selects Adobe Acrobat software.
 
