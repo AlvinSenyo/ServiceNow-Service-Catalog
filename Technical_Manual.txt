@@ -1,0 +1,113 @@
+================================================================================
+TECHNICAL MANUAL: CATALOG ITEM RECOMMENDATION LOGIC (SERVICENOW)
+Target Item: Developer Laptop (Mac)
+Functionality: Contextual Software Recommendation
+================================================================================
+
+1. OVERVIEW
+-----------
+This manual describes how to implement a real-time recommendation message on a 
+ServiceNow Catalog Item. When a user selects "Developer Laptop – Mac" AND 
+"Adobe Acrobat", the system will suggest "Adobe Photoshop".
+
+2. STEP 1: CREATE THE CATALOG ITEM
+----------------------------------
+1. Navigate to: Service Catalog > Catalog Definitions > Maintain Items.
+2. Click [New].
+3. Set Name: Developer Laptop (Mac)
+4. Set Catalog: Service Catalog
+5. Set Category: Hardware
+6. Click [Submit] and re-open the record.
+
+3. STEP 2: CONFIGURE VARIABLES (THE FIELDS)
+-------------------------------------------
+You must create TWO variables. The "Name" field is what the script uses.
+
+A. Device Type Variable:
+   - Type: Select Box
+   - Question: Device Type
+   - Name: device_type
+   - Type Specifications (Question Choices):
+     * Text: Developer Laptop – Mac  | Value: mac
+     * Text: Standard Laptop         | Value: standard
+   - Default Value (Optional): mac
+
+B. Software Selection Variable:
+   - Type: Select Box
+   - Question: Software Selection
+   - Name: software_selection
+   - Type Specifications (Question Choices):
+     * Text: Adobe Acrobat           | Value: adobe_acrobat
+     * Text: Microsoft Office        | Value: ms_office
+
+4. STEP 3: CREATE THE CATALOG CLIENT SCRIPT
+-------------------------------------------
+This is the "brain" that monitors the form.
+
+1. On the Catalog Item record, scroll to "Catalog Client Scripts" related list.
+2. Click [New].
+3. Fill in the Header details:
+   - Name: Recommend Photoshop for Mac Users
+   - UI Type: All (Works on Portal and Desktop)
+   - Type: onChange
+   - Variable name: software_selection
+   - Applies on a Catalog Item: Checked
+
+4. Copy/Paste the following script into the Script field:
+
+/**
+ * Technical Script for Contextual Recommendations
+ * Trigger: Runs when the software_selection field changes.
+ */
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    
+    // 1. Exit the script if the form is loading or the field is cleared.
+    // This prevents errors on initial page load.
+    if (isLoading || newValue === '') {
+        return;
+    }
+
+    // 2. Retrieve the value of the 'Device Type' field using the API.
+    // 'device_type' must match the internal name of your variable.
+    var device = g_form.getValue('device_type');
+
+    // 3. Define the criteria for the recommendation.
+    // Note: We use the 'Value' (mac), not the 'Label'.
+    var isMac = (device == 'mac');
+    var isAcrobat = (newValue == 'adobe_acrobat');
+
+    // 4. Logic Gate: Check if both conditions are true.
+    if (isMac && isAcrobat) {
+        
+        // 5. If conditions match, show a blue info message under the field.
+        // Parameters: (target_variable_name, message_text, type)
+        var msg = "Recommendation: As a Mac user ordering Adobe Acrobat, you may also benefit from Adobe Photoshop.";
+        g_form.showFieldMsg('software_selection', msg, 'info');
+        
+    } else {
+        
+        // 6. If conditions change (e.g. user picks a different laptop or software),
+        // we must hide the message so it doesn't stay on the screen.
+        g_form.hideFieldMsg('software_selection');
+    }
+}
+
+5. STEP 4: VERIFICATION (TESTING)
+---------------------------------
+1. Click the [Try It] button on the Catalog Item.
+2. Select "Developer Laptop – Mac".
+3. Select "Adobe Acrobat".
+4. CONFIRM: A blue info message appears under the software field.
+5. Change Software to "Microsoft Office".
+6. CONFIRM: The message disappears.
+
+6. TROUBLESHOOTING
+------------------
+- Message not showing? Press F12 to check the console for "ReferenceErrors".
+- Values mismatch: Double check that the "Value" in your variable choice 
+  is exactly 'mac' (all lowercase).
+- Script not running: Ensure "UI Type" is set to "All".
+
+================================================================================
+END OF MANUAL
+================================================================================
