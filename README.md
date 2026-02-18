@@ -10,20 +10,17 @@ The goal of this project is to improve the User Experience (UX) within the Servi
 ---
 
 ## 🏛️ System Architecture
-The solution follows a **Client-Side Event Listener** architecture.
 
 1.  **Trigger:** An `onChange` event is fired when the user interacts with the `software_selection` variable.
 2.  **Logic Engine:** A Catalog Client Script retrieves the current state of the form.
-3.  **UI Controller:** The `g_form` API interacts with the Document Object Model (DOM) to inject a field message dynamically without requiring a page reload or server-side call.
-
 
 
 ---
 ## 📂 File Inventory
 * [Technical_Manual.txt](./Technical_Manual.txt) - Detailed, click-by-click build guide for manual replication.
-* [DeveloperMacs.PNG](./DeveloperMac.PNG) - Full visual map of the Flow Designer logic and branching.
-* [Output.PNG](./Output.PNG) - Full visual map of the Flow Designer logic and branching.
-* [RecommendAdobe.PNG](./RecommendAdobe.PNG) - Full visual map of the Flow Designer logic and branching.
+* [DeveloperMacs.PNG](./DeveloperMac.PNG) - Catalog item creation.
+* [Output.PNG](./Output.PNG) - Visual verification of the blue recommendation box appearing on the Service Portal.
+* [RecommendAdobe.PNG](./RecommendAdobe.PNG) - Screenshot evidence of the Client Script.
 
 ## 📂 Process Flow
 Components used:
